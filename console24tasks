@@ -1,0 +1,117 @@
+PS D:\jswork> tsx 24tasks.ts   
+=== 1. Базовые типы ===
+{
+  num: 42,
+  str: 'hello',
+  bool: true,
+  big: 9007199254740991n,
+  sym: Symbol(id),
+  nul: null,
+  undef: undefined
+}
+
+=== 2. processValue ===
+ПРИВЕТ
+42
+неизвестный тип
+
+=== 3. sumMatrix ===
+Города: [ 'Москва', 'Питер', 'Казань' ]
+Матрица: [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
+Пустой массив: []
+Сумма матрицы: 45
+
+=== 4. Кортежи ===
+Иван, 30 лет, активен
+Опциональный кортеж: [ 'Мария', 25 ]
+
+=== 5. Book ===
+{ title: '1984', author: 'Оруэлл', year: 1949, isbn: '978-0451524935' }
+
+=== 6. createUser ===
+{ name: 'Иван', age: 30, email: 'не указан' }
+{ name: 'Анна', age: 25, email: 'anna@mail.ru' }
+
+=== 7. max ===
+9
+-Infinity
+
+=== 8. format ===
+"привет"
+3.14
+да
+нет
+
+=== 9. printId ===
+Строковый ID: abc-123
+Числовой ID: 42
+
+=== 10. Пересечение типов ===
+Person: { name: 'Иван', age: 30 }
+FullPerson: { name: 'Иван', age: 30, email: 'ivan@mail.ru' }
+
+=== 11. move ===
+Движение вверх
+Движение влево
+
+=== 12. Car ===
+{ brand: 'Tesla', year: 2023, model: 'Model 3', electric: true }
+
+=== 13. Config ===
+{ apiUrl: 'https://api.example.com', timeout: 5000 }
+
+=== 14. Point ===
+PointI: { x: 1, y: 2 }
+PointT: { x: 3, y: 4 }
+
+=== 15. BankAccount ===
+Баланс acc1: 700
+Всего счетов: 2
+
+=== 16. Animal ===
+Животное 1: Гав!
+Животное 2: Мяу!
+Животное 3: ...
+
+=== 17. Shape ===
+Площадь: 78.54
+Площадь: 24.00
+Площадь: 6.00
+Общая площадь: 108.54
+
+=== 18. Serializable ===
+Сериализовано: {"theme":"dark","fontSize":14}
+Восстановлено: {"theme":"dark","fontSize":14}
+
+=== 19. last ===
+3
+c
+{ id: 2 }
+undefined
+
+=== 20. getProperty ===
+Иван
+30
+
+=== 21. Queue ===
+Размер очереди чисел: 3
+Первый элемент: 1
+Извлечён: 1
+Осталось: 2
+Очередь строк: a b
+
+=== 22. Utility-типы Article ===
+Draft: { title: 'Черновик' }
+Preview: { id: 1, title: 'Новость' }
+WithoutId: Без ID
+Required: Полная
+
+=== 23. Record и ReturnType ===
+Scores: { 'Иван': 90, 'Пётр': 85, 'Анна': 95, 'Олег': 78 }
+ConfigType: { apiUrl: 'https://test.com', timeout: 3000 }
+
+=== 24. handle ===
+Успех: a, b, c
+Ошибка: Что-то пошло не так
+Загрузка...
+PS D:\jswork> 
