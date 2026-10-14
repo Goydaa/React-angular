@@ -1,0 +1,444 @@
+
+// 1. Переменные базовых типов
+
+console.log("=== 1. Базовые типы ===");
+let num: number = 42;
+let str: string = "hello";
+let bool: boolean = true;
+let big: bigint = 9007199254740991n;
+let sym: symbol = Symbol("id");
+let nul: null = null;
+let undef: undefined = undefined;
+
+console.log({ num, str, bool, big, sym, nul, undef });
+
+
+// 2. processValue
+
+console.log("\n=== 2. processValue ===");
+function processValue(value: unknown): string | number {
+  if (typeof value === "string") return value.toUpperCase();
+  if (typeof value === "number") return value * 2;
+  return "неизвестный тип";
+}
+console.log(processValue("привет"));  // ПРИВЕТ
+console.log(processValue(21));         // 42
+console.log(processValue(true));       // неизвестный тип
+
+
+// 3. Массивы и sumMatrix
+
+console.log("\n=== 3. sumMatrix ===");
+const cities: string[] = ["Москва", "Питер", "Казань"];
+const matrix: number[][] = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+];
+const emptyNums: number[] = [];
+
+function sumMatrix(m: number[][]): number {
+  let sum = 0;
+  for (const row of m) for (const n of row) sum += n;
+  return sum;
+}
+console.log("Города:", cities);
+console.log("Матрица:", matrix);
+console.log("Пустой массив:", emptyNums);
+console.log("Сумма матрицы:", sumMatrix(matrix));
+
+
+// 4. Кортежи
+
+console.log("\n=== 4. Кортежи ===");
+type PersonTuple = [string, number, boolean];
+function describePerson(t: PersonTuple): string {
+  const [name, age, status] = t;
+  return `${name}, ${age} лет, ${status ? "активен" : "неактивен"}`;
+}
+console.log(describePerson(["Иван", 30, true]));
+
+type OptionalTuple = [string, number, boolean?];
+const optTuple: OptionalTuple = ["Мария", 25];
+console.log("Опциональный кортеж:", optTuple);
+
+
+// 5. Тип Book и readonly isbn
+
+console.log("\n=== 5. Book ===");
+type Book = {
+  title: string;
+  author: string;
+  year: number;
+  readonly isbn: string;
+  genre?: string;
+};
+const book: Book = {
+  title: "1984",
+  author: "Оруэлл",
+  year: 1949,
+  isbn: "978-0451524935",
+};
+console.log(book);
+
+
+
+// 6. createUser
+
+console.log("\n=== 6. createUser ===");
+function createUser(name: string, age: number, email?: string) {
+  return { name, age, email: email ?? "не указан" };
+}
+console.log(createUser("Иван", 30));
+console.log(createUser("Анна", 25, "anna@mail.ru"));
+
+
+// 7. max
+
+console.log("\n=== 7. max ===");
+function max(...nums: number[]): number {
+  if (nums.length === 0) return -Infinity;
+  return Math.max(...nums);
+}
+console.log(max(1, 5, 3, 9, 2)); // 9
+console.log(max());              // -Infinity
+
+
+// 8. Перегрузки format
+
+console.log("\n=== 8. format ===");
+function format(x: string): string;
+function format(x: number): string;
+function format(x: boolean): string;
+function format(x: string | number | boolean): string {
+  if (typeof x === "string") return `"${x}"`;
+  if (typeof x === "number") return x.toFixed(2);
+  return x ? "да" : "нет";
+}
+console.log(format("привет"));
+console.log(format(3.14159));
+console.log(format(true));
+console.log(format(false));
+
+
+// 9. ID и printId
+
+console.log("\n=== 9. printId ===");
+type ID = string | number;
+function printId(id: ID): string {
+  if (typeof id === "string") return `Строковый ID: ${id}`;
+  return `Числовой ID: ${id}`;
+}
+console.log(printId("abc-123"));
+console.log(printId(42));
+
+
+// 10. Пересечение типов
+
+console.log("\n=== 10. Пересечение типов ===");
+type HasName = { name: string };
+type HasAge = { age: number };
+type Person = HasName & HasAge;
+const person: Person = { name: "Иван", age: 30 };
+console.log("Person:", person);
+
+type HasEmail = { email: string };
+type FullPerson = Person & HasEmail;
+const fullPerson: FullPerson = { name: "Иван", age: 30, email: "ivan@mail.ru" };
+console.log("FullPerson:", fullPerson);
+
+
+// 11. Direction
+
+console.log("\n=== 11. move ===");
+type Direction = "up" | "down" | "left" | "right";
+function move(dir: Direction): string {
+  const map: Record<Direction, string> = {
+    up: "Движение вверх",
+    down: "Движение вниз",
+    left: "Движение влево",
+    right: "Движение вправо",
+  };
+  return map[dir];
+}
+console.log(move("up"));
+console.log(move("left"));
+
+
+
+// 12. Vehicle и Car
+
+console.log("\n=== 12. Car ===");
+interface Vehicle {
+  brand: string;
+  year: number;
+}
+interface Car extends Vehicle {
+  model: string;
+  electric: boolean;
+}
+const car: Car = {
+  brand: "Tesla",
+  year: 2023,
+  model: "Model 3",
+  electric: true,
+};
+console.log(car);
+
+// 13. Слияние интерфейсов Config
+
+console.log("\n=== 13. Config ===");
+interface Config {
+  apiUrl: string;
+}
+interface Config {
+  timeout: number;
+}
+const config: Config = { apiUrl: "https://api.example.com", timeout: 5000 };
+console.log(config);
+
+
+// 14. Point через interface и type
+
+console.log("\n=== 14. Point ===");
+interface PointI {
+  x: number;
+  y: number;
+}
+type PointT = { x: number; y: number };
+const p1: PointI = { x: 1, y: 2 };
+const p2: PointT = { x: 3, y: 4 };
+console.log("PointI:", p1);
+console.log("PointT:", p2);
+
+
+// 15. BankAccount
+
+console.log("\n=== 15. BankAccount ===");
+class BankAccount {
+  private balance: number = 0;
+  readonly owner: string;
+  public accountNumber: string;
+  static totalAccounts: number = 0;
+
+  constructor(owner: string, accountNumber: string) {
+    this.owner = owner;
+    this.accountNumber = accountNumber;
+    BankAccount.totalAccounts++;
+  }
+
+  deposit(amount: number): void {
+    if (amount <= 0) throw new Error("Сумма должна быть положительной");
+    this.balance += amount;
+  }
+
+  withdraw(amount: number): void {
+    if (amount > this.balance) throw new Error("Недостаточно средств");
+    this.balance -= amount;
+  }
+
+  getBalance(): number {
+    return this.balance;
+  }
+}
+const acc1 = new BankAccount("Иван", "ACC-001");
+const acc2 = new BankAccount("Анна", "ACC-002");
+acc1.deposit(1000);
+acc1.withdraw(300);
+console.log("Баланс acc1:", acc1.getBalance());
+console.log("Всего счетов:", BankAccount.totalAccounts);
+
+
+// 16. Animal / Dog / Cat
+
+console.log("\n=== 16. Animal ===");
+class Animal {
+  makeSound(): string {
+    return "...";
+  }
+}
+class Dog extends Animal {
+  makeSound(): string {
+    return "Гав!";
+  }
+}
+class Cat extends Animal {
+  makeSound(): string {
+    return "Мяу!";
+  }
+}
+const animals: Animal[] = [new Dog(), new Cat(), new Animal()];
+animals.forEach((a, i) => console.log(`Животное ${i + 1}:`, a.makeSound()));
+
+
+// 17. Shape / Circle / Rectangle / Triangle
+
+console.log("\n=== 17. Shape ===");
+abstract class Shape {
+  abstract area(): number;
+  describe(): string {
+    return `Площадь: ${this.area().toFixed(2)}`;
+  }
+}
+class Circle extends Shape {
+  constructor(private r: number) { super(); }
+  area(): number { return Math.PI * this.r ** 2; }
+}
+class Rectangle extends Shape {
+  constructor(private w: number, private h: number) { super(); }
+  area(): number { return this.w * this.h; }
+}
+class Triangle extends Shape {
+  constructor(private a: number, private b: number, private c: number) { super(); }
+  area(): number {
+    const p = (this.a + this.b + this.c) / 2;
+    return Math.sqrt(p * (p - this.a) * (p - this.b) * (p - this.c));
+  }
+}
+const shapes: Shape[] = [new Circle(5), new Rectangle(4, 6), new Triangle(3, 4, 5)];
+shapes.forEach((s) => console.log(s.describe()));
+const totalArea = shapes.reduce((sum, s) => sum + s.area(), 0);
+console.log("Общая площадь:", totalArea.toFixed(2));
+
+
+// 18. Serializable / Settings
+
+console.log("\n=== 18. Serializable ===");
+interface Serializable {
+  serialize(): string;
+  deserialize(data: string): void;
+}
+class Settings implements Serializable {
+  private settings: Record<string, unknown> = {};
+  serialize(): string { return JSON.stringify(this.settings); }
+  deserialize(data: string): void { this.settings = JSON.parse(data); }
+  set(key: string, value: unknown): void { this.settings[key] = value; }
+}
+const settings = new Settings();
+settings.set("theme", "dark");
+settings.set("fontSize", 14);
+const serialized = settings.serialize();
+console.log("Сериализовано:", serialized);
+const restored = new Settings();
+restored.deserialize(serialized);
+console.log("Восстановлено:", restored.serialize());
+
+
+// 19. last<T>
+
+console.log("\n=== 19. last ===");
+function last<T>(arr: T[]): T | undefined {
+  return arr.length ? arr[arr.length - 1] : undefined;
+}
+console.log(last([1, 2, 3]));
+console.log(last(["a", "b", "c"]));
+console.log(last([{ id: 1 }, { id: 2 }]));
+console.log(last([]));
+
+
+// 20. getProperty<T, K>
+
+console.log("\n=== 20. getProperty ===");
+function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+const user20 = { name: "Иван", age: 30 };
+console.log(getProperty(user20, "name"));
+console.log(getProperty(user20, "age"));
+
+
+// 21. Queue<T>
+
+console.log("\n=== 21. Queue ===");
+class Queue<T> {
+  private items: T[] = [];
+  enqueue(item: T): void { this.items.push(item); }
+  dequeue(): T | undefined { return this.items.shift(); }
+  peek(): T | undefined { return this.items[0]; }
+  size(): number { return this.items.length; }
+}
+const qn = new Queue<number>();
+qn.enqueue(1); qn.enqueue(2); qn.enqueue(3);
+console.log("Размер очереди чисел:", qn.size());
+console.log("Первый элемент:", qn.peek());
+console.log("Извлечён:", qn.dequeue());
+console.log("Осталось:", qn.size());
+
+const qs = new Queue<string>();
+qs.enqueue("a"); qs.enqueue("b");
+console.log("Очередь строк:", qs.dequeue(), qs.dequeue());
+
+
+// 22. Utility-типы от Article
+
+console.log("\n=== 22. Utility-типы Article ===");
+interface Article {
+  id: number;
+  title: string;
+  content: string;
+  publishedAt: Date;
+  tags: string[];
+}
+type ArticleDraft = Partial<Article>;
+type ArticlePreview = Pick<Article, "id" | "title">;
+type ArticleWithoutId = Omit<Article, "id">;
+type ArticleRequired = Required<Partial<Article>>;
+
+const draft: ArticleDraft = { title: "Черновик" };
+const preview: ArticlePreview = { id: 1, title: "Новость" };
+const withoutId: ArticleWithoutId = {
+  title: "Без ID",
+  content: "Текст",
+  publishedAt: new Date(),
+  tags: ["ts"],
+};
+const required: ArticleRequired = {
+  id: 1,
+  title: "Полная",
+  content: "Текст",
+  publishedAt: new Date(),
+  tags: [],
+};
+console.log("Draft:", draft);
+console.log("Preview:", preview);
+console.log("WithoutId:", withoutId.title);
+console.log("Required:", required.title);
+
+
+// 23. Record и ReturnType
+
+console.log("\n=== 23. Record и ReturnType ===");
+type Scores = Record<string, number>;
+const scores: Scores = { Иван: 90, Пётр: 85, Анна: 95, Олег: 78 };
+console.log("Scores:", scores);
+
+function makeConfig() {
+  return { apiUrl: "https://api.example.com", timeout: 5000 };
+}
+type ConfigType = ReturnType<typeof makeConfig>;
+const cfg: ConfigType = { apiUrl: "https://test.com", timeout: 3000 };
+console.log("ConfigType:", cfg);
+
+
+// 24. handle(res: Response)
+
+console.log("\n=== 24. handle ===");
+type ApiResponse =
+  | { status: "success"; data: string[] }
+  | { status: "error"; message: string }
+  | { status: "loading" };
+
+function handle(res: ApiResponse): string {
+  switch (res.status) {
+    case "success":
+      return `Успех: ${res.data.join(", ")}`;
+    case "error":
+      return `Ошибка: ${res.message}`;
+    case "loading":
+      return "Загрузка...";
+  }
+}
+
+console.log(handle({ status: "success", data: ["a", "b", "c"] }));
+console.log(handle({ status: "error", message: "Что-то пошло не так" }));
+console.log(handle({ status: "loading" }));
